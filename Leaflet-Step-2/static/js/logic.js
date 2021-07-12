@@ -19,30 +19,18 @@ function createFeatures(data) {
   }
 
   function getColor(d) {
-    if (d <= 10) {
-      return "LawnGreen"
-    }
-    else if (d <= 30) {
-      return "GreenYellow"
-    }
-    else if (d <= 30) {
-      return "GYellow"
-    }
-    else if (d <= 30) {
-      return "Gold"
-    }
-    else if (d <= 30) {
-      return "Orange"
-    }
-    else {
-      return "Red"
-    }
-  };
+    return d > 90 ? 'Red':
+      d >= 70 ? 'OrangeRed':
+      d >= 50 ? 'Orange':
+      d >= 30 ? 'Yellow':
+      d >= 10 ? 'LawnGreen':
+      "Green"
+  }  
 
   function pointToLayer(feature, latlng) {
     var geojsonMarkerOptions = {
       fillColor: getColor(feature.geometry.coordinates[2]),
-      radius: feature.properties.mag * 2,
+      radius: feature.properties.mag * 3,
       fillOpacity: 0.8,
       color: "white",
       weight: 2
@@ -102,7 +90,7 @@ function createMap(quakes) {
   // We set the longitude, latitude, and the starting zoom level
   // This gets inserted into the div with an id of 'map'
   var myMap = L.map("map", {
-    center: [45.52, -122.67],
+    center: [40, -90],
     zoom: 3,
     layers: [outdoormap, quakes]
   });
@@ -110,22 +98,30 @@ function createMap(quakes) {
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
+
+  function getColor(d) {
+    return d > 90 ? 'Red':
+      d >= 70 ? 'OrangeRed':
+      d >= 50 ? 'Orange':
+      d >= 30 ? 'Yellow':
+      d >= 10 ? 'LawnGreen':
+      "Green"
+  }  
+  //Set-up Legend
+  var legend = L.control({ position: "bottomright"});
+    legend.onAdd = function() {
+      var div = L.DomUtil.create("div", "info legend");
+      var grades = [-10, 10, 30, 50, 70, 90];
+      var labels = [];
+
+      div.innerHTML += '<strong>Depth</strong><br>'
+
+      for (var i= 0; i < grades.length; i++) {
+        div.innerHTML +=
+          '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+          grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      }
+      return div;
+      }; 
+  legend.addTo(myMap);
 };
-
-
-  // //Create new marker cluster group
-  // var markers = L.markerClusterGroup();
-
-  // //Loop through data
-  // for (var i = 0; i < response.length; i++) {
-    
-  //   //set geometry property to variable
-  //   var location = response.feature[i].geometry;
-
-  //   //check for geometry property
-  //   if (geometry) {
-  //     markers.addLayer(L.marker([location.coordinates[1], location.coordinates[0]])
-  //     )};
-  // }
-
-  // myMap.addLayer(markers)
