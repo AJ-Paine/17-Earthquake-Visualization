@@ -96,7 +96,7 @@ d3.json(weekURL, function(response){
   
     //Create inital map object with default layers
     var myMap = L.map("map", {
-      center: [20, -100],
+      center: [20, 0],
       zoom: 3,
       layers: [outdoormap, quakes, tectPlates]
     });
