@@ -20,7 +20,7 @@ No surprise, but it is reinforcing to see how well the earthquakes align with th
 ## Deployment
 View the deployed web page here!
 
-https://aj-paine.github.io/leaflet-challenge/
+https://aj-paine.github.io/17-Earthquake-Visualization/
 
 ## Sources
 * https://github.com/fraxen/tectonicplates
