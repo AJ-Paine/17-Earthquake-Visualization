@@ -1,4 +1,4 @@
-# leafLet-challenge
+# Earthquake Visualization
 
 ## About
 
